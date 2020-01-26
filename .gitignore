@@ -1,4 +1,5 @@
 server
 config.json
+nohup.out
 task.db
 
