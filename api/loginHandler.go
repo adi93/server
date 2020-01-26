@@ -10,6 +10,7 @@ import (
 	"time"
 
 	"github.com/gorilla/sessions"
+	"server/config"
 	"server/templates"
 )
 
@@ -95,7 +96,7 @@ func validUser(username, password string) bool {
 	combination := username + "{" + password + "}256"
 	hasher := sha256.New()
 	hasher.Write([]byte(combination))
-	if hex.EncodeToString(hasher.Sum(nil)) == "d77c2632fbd17b3341f64462d6d22b573871d62eb13b457f74e42c21af2bcee9" {
+	if hex.EncodeToString(hasher.Sum(nil)) == config.HashedPassword() {
 		return true
 	}
 	return false

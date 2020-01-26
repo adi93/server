@@ -7,18 +7,19 @@ import (
 )
 
 type config struct {
-	CertFile      string
-	KeyFile       string
-	HTTPSMode     bool
-	HTTPPort      string
-	LocalhostMode bool
-	DomainName    string
-	LoginWorks    bool
-	FilesDir      string
-	MathjaxDir    string
-	JsCSSDir      string
-	DeployBlog    bool
-	TaskConfig    TaskConfig
+	CertFile       string
+	KeyFile        string
+	HTTPSMode      bool
+	HTTPPort       string
+	LocalhostMode  bool
+	DomainName     string
+	LoginWorks     bool
+	FilesDir       string
+	MathjaxDir     string
+	JsCSSDir       string
+	DeployBlog     bool
+	TaskConfig     TaskConfig
+	HashedPassword string
 }
 
 // TaskConfig stores configuration for task management database
@@ -97,6 +98,11 @@ func JsCSSDir() string {
 // DeployBlog -
 func DeployBlog() bool {
 	return conf.DeployBlog
+}
+
+// HashedPassword -
+func HashedPassword() string {
+	return conf.HashedPassword
 }
 
 // TaskConfiguration returns configuration properties related to task server, which includes db details.
