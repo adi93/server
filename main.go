@@ -26,15 +26,6 @@ const (
 	WIKI = "wiki"
 )
 
-type hello struct{}
-
-func message(s string) func(http.ResponseWriter, *http.Request) {
-	log.Println(s)
-	return func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte(s))
-	}
-}
-
 func main() {
 	log.Println("Starting the server")
 
@@ -55,7 +46,7 @@ func main() {
 		},
 	}
 
-	if config.HTTPSMode() == true {
+	if config.HTTPSMode() {
 		srv.Addr = ":443"
 		certFile := config.CertFile()
 		keyFile := config.KeyFile()
@@ -157,7 +148,10 @@ func mapTaskServer(r *mux.Router, taskConfig config.TaskConfig) {
 	}
 
 	taskRepository.InitTaskRepo(dbHandler)
-	service.InitializeTaskService(taskRepository.Repository())
+	err := service.InitializeTaskService(taskRepository.Repository())
+	if err != nil {
+		log.Fatalf("Could not start task service: %s", err.Error())
+	}
 
 	taskController := controller.TaskController{TaskService: service.TaskService}
 	r.HandleFunc("/", HelloTask).Methods("GET")
