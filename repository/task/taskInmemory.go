@@ -20,6 +20,11 @@ type inMemoryTaskRepository struct {
 	im map[int64]domain.Task
 }
 
+// counter serves as a unique task id.
+// TODO: Will make all of this mess thread safe one day, but this is just
+// used for testing task service, so not an issue.
+var counter int64
+
 // GetTaskByTitle is default
 func (pr *inMemoryTaskRepository) GetTaskByTitle(ctx context.Context, title string) (domain.Task, error) {
 	p, ok := pr.m[title]
@@ -42,9 +47,12 @@ func (pr *inMemoryTaskRepository) GetAllTasks(ctx context.Context) ([]domain.Tas
 func (pr *inMemoryTaskRepository) AddTask(ctx context.Context, task domain.Task) (id int64, err error) {
 	_, ok := pr.m[task.Title]
 	if ok {
-		return 0, errors.ErrorObjectAlreadyExists
+		return -1, errors.ErrorObjectAlreadyExists
 	}
 	pr.m[task.Title] = task
+
+	task.Rowid = counter
+	counter = counter + 1
 	pr.im[task.Rowid] = task
 	return task.Rowid, nil
 }

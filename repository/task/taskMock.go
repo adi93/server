@@ -1,6 +1,7 @@
 package task
 
 import (
+	"log"
 	"server/domain"
 
 	"context"
@@ -18,7 +19,10 @@ const (
 // can be controlled by it.
 func InitializeMockTaskRepo() {
 	repo := mockTaskRepository{}
-	InitializeTaskRepo(&repo)
+	err := InitializeTaskRepo(&repo)
+	if err != nil {
+		log.Printf("Ignoring duplicate initialization of Mock Task Repo")
+	}
 }
 
 type mockTaskRepository struct {

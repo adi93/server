@@ -67,14 +67,15 @@ func (d Duration) String() string {
 	return time.Duration(d).String()
 }
 
-// Value driver
-func (d Duration) Value() (driver.Value, error) {
-	return d.String(), nil
-}
-
 // MarshalJSON is json encoding for Duration.
 // Example: A duration of "1h10m" is returned as it is, i.e., "1h10m"
 func (d Duration) MarshalJSON() ([]byte, error) {
 	return []byte("\"" + d.String() + "\""), nil
 
 }
+
+// Value driver
+func (d Duration) Value() (driver.Value, error) {
+	return d.String(), nil
+}
+

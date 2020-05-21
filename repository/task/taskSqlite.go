@@ -46,14 +46,20 @@ func newTaskRepoSqlite(db db.Handler) ITaskRepo {
 var _ ITaskRepo = taskRepositorySqlite{}
 
 // GetTaskByTitle gets a task by its title
-func (pr taskRepositorySqlite) GetTaskByTitle(ctx context.Context, title string) (domain.Task, error) {
+func (pr taskRepositorySqlite) GetTaskByTitle(ctx context.Context, title string) (task domain.Task, err error) {
+	defer func() {
+		if r := recover(); r != nil {
+			task = domain.Task{}
+			err = fmt.Errorf("%v", r)
+		}
+	}()
+
 	row := pr.dbHandler.QueryRow("SELECT * FROM task WHERE title =?", title)
-	var task domain.Task
-	if err := row.StructScan(&task); err != nil {
+	err = row.StructScan(&task)
+	if err != nil {
 		log.Printf("Title: %s", title)
-		return task, err
 	}
-	return task, nil
+	return
 }
 
 // GetAllTasks returns all tasks

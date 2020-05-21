@@ -50,7 +50,7 @@ type taskServiceBuilder struct {
 }
 
 // Build is used to initialize channel service
-func (tsb *taskServiceBuilder) Build(args ...interface{}) error {
+func (tsb *taskServiceBuilder) buildInternal(args ...interface{}) error {
 	if len(args) != 1 {
 		return errors.ErrorArgumentMismatch
 	}

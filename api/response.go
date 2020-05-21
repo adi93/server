@@ -39,12 +39,21 @@ type Response interface {
 	GetErrors() []Error
 	String() string
 	AddError(err error)
+	Equals(r interface{}) bool
 }
 
 // StdResponse implements Response
 type StdResponse struct {
 	Successful bool    `json:"successful"`
 	Errors     []Error `json:"errors"`
+}
+
+// Equals checks if the response is same to any other response
+func (r *StdResponse) Equals(other interface{}) bool {
+	if otherResp, ok := other.(Response); ok {
+		return r.Successful == otherResp.Success()
+	}
+	return false
 }
 
 // AddError adds an error to response

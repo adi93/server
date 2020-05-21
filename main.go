@@ -46,7 +46,7 @@ func main() {
 		},
 	}
 
-	if config.HTTPSMode() {
+	if config.HTTPSMode() == true {
 		srv.Addr = ":443"
 		certFile := config.CertFile()
 		keyFile := config.KeyFile()

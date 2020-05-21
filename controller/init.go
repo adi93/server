@@ -1,3 +1,12 @@
+// Package controller provides controllers for various tasks.
+//
+// To add a new controller, do the following:
+//
+// 1. Create a struct which encompasses the required services
+//
+// 2. All the methods of that struct should have the following signature:
+//	  func (c <controllerStruct>) <funcName>(w http.ResponseWriter, r *http.Request) {
+// 3. Finally, register the controller methods in the main.go file
 package controller
 
 import (

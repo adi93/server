@@ -15,6 +15,7 @@ const (
 )
 
 // CreateTaskRequest used for creating a task
+// See Validate method for structure of it's fields
 type CreateTaskRequest struct {
 	Title       string `json:"title"`
 	Description string `json:"description"`
@@ -140,6 +141,13 @@ type CreateTaskResponse struct {
 	TaskID   int64 `json:"task_id"`
 }
 
+// Equals check for equality between CreateTaskResponse and other objects
+func (r CreateTaskResponse) Equals(o interface{}) bool {
+	if other, ok := o.(CreateTaskResponse); ok {
+		return other.TaskID == r.TaskID && other.Response.Equals(r.Response)
+	}
+	return false
+}
 func (r CreateTaskResponse) String() string {
 	return fmt.Sprintf(`{"response": %v, "taskId":%d}`, r.Response.String(), r.TaskID)
 }

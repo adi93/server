@@ -1,6 +1,7 @@
 package utils
 
 import (
+	"encoding/json"
 	"unicode"
 )
 
@@ -16,4 +17,13 @@ func IsBlank(s string) bool {
 		}
 	}
 	return true
+}
+
+// PrintStruct prints a structure in a pretty manner.
+func PrintStruct(s interface{}) string {
+	str, err := json.Marshal(s)
+	if err != nil {
+		panic("Could not covert into json format")
+	}
+	return string(str)
 }

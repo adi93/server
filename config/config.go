@@ -4,8 +4,12 @@ import (
 	"encoding/json"
 	"log"
 	"os"
+	"server/utils"
 )
 
+// config is the base structure for configuration file.
+// Whenever you want to add a new field, also create its getter,
+// prefereably with same name, and add entry in initconfigDefaults() if needed
 type config struct {
 	CertFile       string
 	KeyFile        string
@@ -20,6 +24,7 @@ type config struct {
 	DeployBlog     bool
 	TaskConfig     TaskConfig
 	HashedPassword string
+	TemplateDir    string
 }
 
 // TaskConfig stores configuration for task management database
@@ -48,6 +53,11 @@ const configFile string = "./config.json"
 // CertFile -
 func CertFile() string {
 	return conf.CertFile
+}
+
+// TemplateDir -
+func TemplateDir() string {
+	return conf.TemplateDir
 }
 
 // KeyFile -
@@ -100,11 +110,6 @@ func DeployBlog() bool {
 	return conf.DeployBlog
 }
 
-// HashedPassword -
-func HashedPassword() string {
-	return conf.HashedPassword
-}
-
 // TaskConfiguration returns configuration properties related to task server, which includes db details.
 func TaskConfiguration() TaskConfig {
 	return conf.TaskConfig
@@ -126,14 +131,11 @@ func initialize(configFile string) config {
 	defer file.Close()
 
 	decoder := json.NewDecoder(file)
-	var conf config
 	err = decoder.Decode(&conf)
-
 	if err != nil {
 		log.Fatal("Error parsing json file: ", err)
 	}
-
-	log.Printf("%+v", conf)
+	log.Printf("Config: %s", utils.PrintStruct(conf))
 
 	return conf
 }
@@ -141,10 +143,12 @@ func initialize(configFile string) config {
 func initconfigDefaults() {
 	conf.DomainName = "orakem.site"
 	conf.LocalhostMode = true
+	conf.LocalhostMode = true
 	conf.LoginWorks = true
 	conf.MathjaxDir = "../mathjax/"
 	conf.JsCSSDir = "../js/"
 	conf.FilesDir = "../files/"
 	conf.DeployBlog = false
 	conf.TaskConfig = TaskConfig{}
+	conf.TemplateDir = "../templates/"
 }

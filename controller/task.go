@@ -1,4 +1,3 @@
-// Package controller provides mapping between service and api
 package controller
 
 import (

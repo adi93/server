@@ -24,6 +24,9 @@ func Repository() ITaskRepo {
 type ITaskRepo interface {
 	GetTaskByTitle(ctx context.Context, title string) (domain.Task, error)
 	GetAllTasks(ctx context.Context) ([]domain.Task, error)
+	// AddTask should add the task to the repository, and return a unique task id for it.
+	// If a task with same title or id already existed in the repository in the Pending or In-Progress status,
+	// then it should return a ErrorObjectAlreadyExists error, with -1 as task Id.
 	AddTask(ctx context.Context, task domain.Task) (int64, error)
 	DeleteTask(ctx context.Context, id int64) error
 	DeleteTaskByTitle(ctx context.Context, title string) error
