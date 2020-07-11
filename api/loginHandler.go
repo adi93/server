@@ -9,9 +9,10 @@ import (
 	"strings"
 	"time"
 
-	"github.com/gorilla/sessions"
 	"server/config"
 	"server/templates"
+
+	"github.com/gorilla/sessions"
 )
 
 // sessionValue stores a random string.

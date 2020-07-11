@@ -80,6 +80,11 @@ func LocalhostMode() bool {
 	return conf.LocalhostMode
 }
 
+// HashHashedPassword -
+func HashedPassword() string {
+	return conf.HashedPassword
+}
+
 // DomainName -
 func DomainName() string {
 	return conf.DomainName
