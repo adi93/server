@@ -1,0 +1,12 @@
+{
+	"HTTPSMode": false,
+	"HTTPPort": "8080",
+	"LocalhostMode": true,
+	"DomainName":"localhost",
+	"LoginWorks": false,
+	"FilesDir":"../files/",
+	"MathjaxDir":"../mathjax/",
+	"JsCSSDir":"../js/",
+	"TaskConfig": {},
+	"TemplateDir":"../templates/"
+}

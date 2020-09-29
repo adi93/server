@@ -72,7 +72,11 @@ func HTTPSMode() bool {
 
 // HTTPPort -
 func HTTPPort() string {
-	return conf.HTTPPort
+	httpPort := conf.HTTPPort
+	if (httpPort[0] != ':') {
+		httpPort = ":" + httpPort
+	}
+	return httpPort
 }
 
 // LocalhostMode -
